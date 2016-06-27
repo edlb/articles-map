@@ -1,6 +1,6 @@
 # Articles map
 
-![image](https://github.com/edlb/articles-map/raw/master/demo/screen.png)
+![Example screenshot](https://github.com/edlb/articles-map/raw/master/demo/screen.png)
 
 ## Getting Started
 
