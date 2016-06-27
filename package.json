@@ -1,0 +1,30 @@
+{
+  "author": "@edlb",
+  "description": "A js library to create a map of articles",
+  "devDependencies": {
+    "babel-core": "^6.10.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "css-loader": "^0.23.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "html-webpack-plugin": "^2.21.0",
+    "image-webpack-loader": "^1.8.0",
+    "node-sass": "^3.8.0",
+    "sass-loader": "^4.0.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "name": "articles-map",
+  "license": "Unlicense",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edlb/articles-map.git"
+  },
+  "scripts": {
+    "prebuild": "rm -rf dist && mkdir dist",
+    "build": "NODE_ENV=production webpack --progress",
+    "start": "NODE_ENV=development webpack-dev-server --progress"
+  },
+  "version": "0.1.0"
+}

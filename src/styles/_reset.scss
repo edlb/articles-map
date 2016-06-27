@@ -1,0 +1,69 @@
+*{
+  &,
+  &::before,
+  &::after{
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    box-sizing: inherit;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    margin: 0;
+    padding: 0;
+    text-align: inherit;
+    text-decoration: inherit;
+    text-transform: inherit;
+  }
+}
+a,
+button,
+input,
+select,
+textarea{
+  // states
+  &:focus{
+    outline: none;
+  }
+}
+a{
+  text-decoration: none;
+}
+body{
+  font-size: 1rem;
+  height: 100%;
+  line-height: 1.5rem;
+  min-height: 100%;
+}
+button,
+label,
+select{
+  cursor: pointer;
+}
+button{
+  // children
+  &::-moz-focus-inner{
+    border: none;
+    padding: 0;
+  }
+}
+html{
+  background-color: $color-body;
+  box-sizing: border-box;
+  color: $color-text;
+  font-family: $font-family-default;
+  height: 100%;
+  text-align: left;
+}
+iframe,
+img{
+  display: block;
+  max-width: 100%;
+}
+ol,
+ul{
+  list-style-position: inside;
+}
