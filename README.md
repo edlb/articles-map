@@ -37,42 +37,60 @@ Get the file at `dist/articles-map.js`
 
 ## Usage
 
+Classic mode
+
 ```
 new ArticlesMap({
   ...
 });
 ```
 
+or HTML mode
+
+```
+new ArticlesMap('<map-container-selector>');
+```
+
+In HTML mode, parameters are set through `data` attributes
+
+Boolean parameters do not need a value
+
+For example: `isMaxWidth: true` will be `data-is-max-width` while `x: 10` will be `data-x=10`
+
 ### Parameters
 
-| Parameter | Type   | Mandatory | Default |
-|-----------|--------|-----------|---------|
-| arrows    | string | yes       |         |
-| articles  | array  | yes       |         |
-| container | string | yes       |         |
-| east      | string | yes       |         |
-| map       | string | yes       |         |
-| north     | string | yes       |         |
-| options   | object | no        | {}      |
-| south     | string | yes       |         |
-| west      | string | yes       |         |
+Mandatory is only relevant in classic mode
+
+| Parameter | Type   | Mandatory | Default | HTML mode attribute     |
+|-----------|--------|-----------|---------|-------------------------|
+| arrows    | string | yes       |         | data-module="amArrows"  |
+| articles  | array  | yes       |         | data-module="amArticle" |
+| container | string | yes       |         |                         |
+| east      | string | yes       |         | data-module="amEast"    |
+| map       | string | yes       |         | data-module="amMap"     |
+| north     | string | yes       |         | data-module="amNorth"   |
+| options   | object | no        | {}      |                         |
+| south     | string | yes       |         | data-module="amSouth"   |
+| west      | string | yes       |         | data-module="amWest"    |
 
 #### Article
 
-Articles can be either a string (selector) or an object
+In classic mode, articles can be either a string (selector) or an object
 
-| Parameter  | Type    | Mandatory | Default |
-|------------|---------|-----------|---------|
-| isMaxWidth | boolean | no        | false   |
-| selector   | string  | yes       |         |
-| x          | string  | no        |         |
-| y          | string  | no        |         |
+| Parameter  | Type    | Mandatory | Default | HTML mode attribute |
+|------------|---------|-----------|---------|---------------------|
+| isMaxWidth | boolean | no        | false   | data-is-max-width   |
+| selector   | string  | yes       |         |                     |
+| x          | string  | no        |         | data-x=<value>      |
+| y          | string  | no        |         | data-y=<value>      |
 
 #### Options
 
-| Parameter          | Type    | Mandatory | Default |
-|--------------------|---------|-----------|---------|
-| autoScrollRange    | number  | no        | 80      |
-| gotoFirstArticle   | boolean | no        | false   |
-| speed              | number  | no        | 4       |
-| transitionDuration | number  | no        | 480     |
+In HTML mode, options are attributes on the container element
+
+| Parameter          | Type    | Mandatory | Default | HTML mode attribute              |
+|--------------------|---------|-----------|---------|----------------------------------|
+| autoScrollRange    | number  | no        | 80      | data-auto-scroll-range=<value>   |
+| gotoFirstArticle   | boolean | no        | false   | data-goto-first-article          |
+| speed              | number  | no        | 4       | data-speed=<value>               |
+| transitionDuration | number  | no        | 480     | data-transition-duration=<value> |

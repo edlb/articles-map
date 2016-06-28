@@ -2,16 +2,17 @@ import './styles/main.scss';
 import { ArticlesMap } from './scripts/articles-map';
 
 window.addEventListener('load', () => {
+  /* Classic mode
   const map = new ArticlesMap({
           arrows: '#map-arrows',
           articles: [{
             selector: '#article1',
-            x: Math.random() * 1920,
+            x: Math.random() * 3840,
             y: Math.random() * 3840
           }, {
             isMaxWidth: true,
             selector: '#article2',
-            x: Math.random() * 3840,
+            x: Math.random() * 1920,
             y: Math.random() * 3840
           }, {
             selector: '#article3',
@@ -47,6 +48,12 @@ window.addEventListener('load', () => {
           south: '#map-south',
           west: '#map-west'
         });
+  */
+
+  // Html mode
+  const map = new ArticlesMap('#map-container');
+
+  // Nav
   const navBtns = document.querySelectorAll('.nav-btn');
 
   for (let i = 0, ii = navBtns.length; i < ii; i++) {

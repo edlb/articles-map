@@ -27,47 +27,79 @@
               data-target="#article7">Article 7</button>
     </nav>
     <main class="map-container"
+          data-auto-scroll-range="80"
+          data-goto-first-article
+          data-speed="4"
+          data-transition-duration="80"
           id="map-container">
       <div class="map-arrows"
+           data-module="amArrows"
            id="map-arrows">
         <button class="map-arrow is-north"
+                data-module="amNorth"
                 id="map-north">North</button>
         <button class="map-arrow is-east"
+                data-module="amEast"
                 id="map-east">East</button>
         <button class="map-arrow is-south"
+                data-module="amSouth"
                 id="map-south">South</button>
         <button class="map-arrow is-west"
+                data-module="amWest"
                 id="map-west">West</button>
       </div>
       <div class="map"
+           data-module="amMap"
            id="map">
         <article class="map-article"
+                 data-module="amArticle"
+                 data-x="1000"
+                 data-y="1000"
                  id="article1">
-          <h2 class="map-article-heading">Article 1</h2>
+          <h2>Article 1</h2>
         </article>
         <article class="map-article"
+                 data-is-max-width
+                 data-module="amArticle"
+                 data-x="1200"
+                 data-y="1200"
                  id="article2">
-          <h2 class="map-article-heading">Article 2</h2>
+          <h2>Article 2</h2>
         </article>
         <article class="map-article"
+                 data-module="amArticle"
+                 data-x="1400"
+                 data-y="1400"
                  id="article3">
-          <h2 class="map-article-heading">Article 3</h2>
+          <h2>Article 3</h2>
         </article>
         <article class="map-article"
+                 data-module="amArticle"
+                 data-x="1600"
+                 data-y="1600"
                  id="article4">
-          <h2 class="map-article-heading">Article 4</h2>
+          <h2>Article 4</h2>
         </article>
         <article class="map-article"
+                 data-module="amArticle"
+                 data-x="1800"
+                 data-y="1800"
                  id="article5">
-          <h2 class="map-article-heading">Article 5</h2>
+          <h2>Article 5</h2>
         </article>
         <article class="map-article"
+                 data-module="amArticle"
+                 data-x="2000"
+                 data-y="2000"
                  id="article6">
-          <h2 class="map-article-heading">Article 6</h2>
+          <h2>Article 6</h2>
         </article>
         <article class="map-article"
+                 data-module="amArticle"
+                 data-x="2200"
+                 data-y="2200"
                  id="article7">
-          <h2 class="map-article-heading">Article 7</h2>
+          <h2>Article 7</h2>
         </article>
       </div>
     </main>

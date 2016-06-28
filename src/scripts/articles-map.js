@@ -1,22 +1,57 @@
 export class ArticlesMap {
   // Constructor
   constructor(config) {
-    const containerElement = document.querySelector(config.container);
-    const arrowsElement = containerElement.querySelector(config.arrows);
-    const eastElement = arrowsElement.querySelector(config.east);
-    const northElement = arrowsElement.querySelector(config.north);
-    const options = config.options || {};
-    const southElement = arrowsElement.querySelector(config.south);
-    const westElement = arrowsElement.querySelector(config.west);
+    const htmlMode = typeof(config) === 'string';
+    const containerElement = document.querySelector(
+            htmlMode ?
+            config :
+            config.container
+          );
+    const arrowsElement = containerElement.querySelector(
+            htmlMode ?
+            '[data-module="amArrows"]' :
+            config.arrows
+          );
+    const eastElement = arrowsElement.querySelector(
+            htmlMode ?
+            '[data-module="amEast"]' :
+            config.east
+          );
+    const mapElement = containerElement.querySelector(
+            htmlMode ?
+            '[data-module="amMap"]' :
+            config.map
+          );
+    const northElement = arrowsElement.querySelector(
+            htmlMode ?
+            '[data-module="amNorth"]' :
+            config.north
+          );
+    const options = (
+            htmlMode ?
+            containerElement.dataset :
+            (config.options || {})
+          );
+    const southElement = arrowsElement.querySelector(
+            htmlMode ?
+            '[data-module="amSouth"]' :
+            config.south
+          );
+    const westElement = arrowsElement.querySelector(
+            htmlMode ?
+            '[data-module="amWest"]' :
+            config.west
+          );
 
     this.arrowsElement = arrowsElement;
-    this.autoScrollRange = options.autoScrollRange || 80;
+    this.autoScrollRange = Number(options.autoScrollRange) || 80;
     this.containerElement = containerElement;
-    this.mapElement = containerElement.querySelector(config.map);
+    this.htmlMode = htmlMode;
+    this.mapElement = mapElement;
     this.mapElement.style.left = 0;
     this.mapElement.style.top = 0;
-    this.speed = options.speed || 4;
-    this.transitionDuration = options.transitionDuration || 480;
+    this.speed = Number(options.speed) || 4;
+    this.transitionDuration = Number(options.transitionDuration) || 480;
 
     containerElement.addEventListener('mouseleave', () => this.mouseLeave());
     arrowsElement.addEventListener('mouseenter', () => this.arrowsMouseEnter());
@@ -28,10 +63,20 @@ export class ArticlesMap {
     northElement.addEventListener('mousedown', () => this.arrowGo('north'));
     southElement.addEventListener('mousedown', () => this.arrowGo('south'));
     westElement.addEventListener('mousedown', () => this.arrowGo('west'));
-    for (let i = 0, ii = config.articles.length; i < ii; i++) {
-      this.setArticle(config.articles[i]);
+    if (htmlMode) {
+      const articleElements = mapElement.querySelectorAll(
+              '[data-module="amArticle"]'
+            );
+
+      for (let i = 0, ii = articleElements.length; i < ii; i++) {
+        this.setArticle(articleElements.item(i));
+      }
+    } else {
+      for (let i = 0, ii = config.articles.length; i < ii; i++) {
+        this.setArticle(config.articles[i]);
+      }
     }
-    if (options.gotoFirstArticle) {
+    if (options.gotoFirstArticle !== undefined) {
       this.gotoArticle(0);
     }
   }
@@ -210,12 +255,16 @@ export class ArticlesMap {
     );
   }
   setArticle(article) {
-    const articleSelector = (
+    const articleSelector = this.htmlMode ? '#' + article.id : (
             typeof(article) === 'string' ?
             article :
             article.selector
           );
-    const articleElement = document.querySelector(articleSelector);
+    const articleElement = (
+            this.htmlMode ?
+            article :
+            document.querySelector(articleSelector)
+          );
 
     if (!this.articleElements) {
       this.articleElements = [];
@@ -224,14 +273,27 @@ export class ArticlesMap {
     this.articleElements.push(articleElement);
     this.articleSelectors.push(articleSelector);
     if (typeof(article) === 'object') {
-      if (article.isMaxWidth) {
+      if (article.isMaxWidth || (
+        this.htmlMode &&
+        article.dataset.isMaxWidth !== undefined
+      )) {
         articleElement.style.width = this.containerElement.offsetWidth + 'px';
       }
-      if (article.x !== undefined) {
-        articleElement.style.left = article.x + 'px';
+      if (article.x !== undefined || (
+        this.htmlMode &&
+        article.dataset.x !== undefined
+      )) {
+        articleElement.style.left = (
+          this.htmlMode ? article.dataset.x : article.x
+        ) + 'px';
       }
-      if (article.y !== undefined) {
-        articleElement.style.top = article.y + 'px';
+      if (article.y !== undefined || (
+        this.htmlMode &&
+        article.dataset.y !== undefined
+      )) {
+        articleElement.style.top = (
+          this.htmlMode ? article.dataset.y : article.y
+        ) + 'px';
       }
     }
   }
