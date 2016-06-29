@@ -41,7 +41,6 @@ window.addEventListener('load', () => {
           north: '#map-north',
           options: {
             autoScrollRange: 80,
-            gotoFirstArticle: true,
             speed: 4,
             transitionDuration: 480
           },

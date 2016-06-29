@@ -76,9 +76,7 @@ export class ArticlesMap {
         this.setArticle(config.articles[i]);
       }
     }
-    if (options.gotoFirstArticle !== undefined) {
-      this.gotoArticle(0);
-    }
+    this.gotoArticle(0);
   }
 
   // Methods

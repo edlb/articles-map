@@ -91,6 +91,5 @@ In HTML mode, options are attributes on the container element
 | Parameter          | Type    | Mandatory | Default | HTML mode attribute               |
 |--------------------|---------|-----------|---------|-----------------------------------|
 | autoScrollRange    | number  | no        | 80      | data-auto-scroll-range=\<value>   |
-| gotoFirstArticle   | boolean | no        | false   | data-goto-first-article           |
 | speed              | number  | no        | 4       | data-speed=\<value>               |
 | transitionDuration | number  | no        | 480     | data-transition-duration=\<value> |
