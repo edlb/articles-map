@@ -44,14 +44,22 @@ export class ArticlesMap {
           );
 
     this.arrowsElement = arrowsElement;
-    this.autoScrollRange = Number(options.autoScrollRange) || 80;
+    this.autoScrollRange = (
+      isNaN(options.autoScrollRange) ?
+      80 :
+      Number(options.autoScrollRange)
+    );
     this.containerElement = containerElement;
     this.htmlMode = htmlMode;
     this.mapElement = mapElement;
     this.mapElement.style.left = 0;
     this.mapElement.style.top = 0;
-    this.speed = Number(options.speed) || 4;
-    this.transitionDuration = Number(options.transitionDuration) || 480;
+    this.speed = isNaN(options.speed) ? 4 : Number(options.speed);
+    this.transitionDuration = (
+      isNaN(options.transitionDuration) ?
+      480 :
+      Number(options.transitionDuration)
+    );
 
     containerElement.addEventListener('mouseleave', () => this.mouseLeave());
     arrowsElement.addEventListener('mouseenter', () => this.arrowsMouseEnter());
