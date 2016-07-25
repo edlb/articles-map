@@ -61,6 +61,7 @@ export class ArticlesMap {
       Number(options.transitionDuration)
     );
 
+    window.addEventListener('keydown', (e) => this.keyDown(e));
     containerElement.addEventListener('mouseleave', () => this.mouseLeave());
     arrowsElement.addEventListener('mouseenter', () => this.arrowsMouseEnter());
     arrowsElement.addEventListener('mouseleave', () => this.arrowsMouseLeave());
@@ -114,6 +115,27 @@ export class ArticlesMap {
   }
   arrowsMouseLeave() {
     this.isArrowsHover = false;
+  }
+  keyDown(event) {
+    if (!this.isKeyDown) {
+      const keyUpEventListener = () => {
+              window.removeEventListener('keyup', keyUpEventListener);
+              this.isKeyDown = false;
+            };
+
+      this.isKeyDown = true;
+      window.addEventListener('keyup', keyUpEventListener);
+      switch (event.keyCode) {
+        case 37:
+          return this.goWest(() => this.isKeyDown);
+        case 38:
+          return this.goNorth(() => this.isKeyDown);
+        case 39:
+          return this.goEast(() => this.isKeyDown);
+        case 40:
+          return this.goSouth(() => this.isKeyDown);
+      }
+    }
   }
   mouseDown() {
     this.isMouseDown = true;
