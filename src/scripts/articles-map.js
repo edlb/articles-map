@@ -132,6 +132,62 @@ export class ArticlesMap {
       eventListeners[i]();
     }
   }
+  goAction(action, validator) {
+    if (validator()) {
+      action();
+      this.dispatchEvent('move');
+      window.setTimeout(() => {
+        this.goAction(action, validator);
+      }, 16);
+    }
+  }
+  goEast(validator) {
+    this.goAction(() => {
+      this.mapElement.style.left = this.limitToRangeHorizontal(
+        Number(this.mapElement.style.left.slice(0, -2)) - this.speed
+      ) + 'px';
+    }, validator);
+  }
+  goNorth(validator) {
+    this.goAction(() => {
+      this.mapElement.style.top = this.limitToRangeVertical(
+        Number(this.mapElement.style.top.slice(0, -2)) + this.speed
+      ) + 'px';
+    }, validator);
+  }
+  goSouth(validator) {
+    this.goAction(() => {
+      this.mapElement.style.top = this.limitToRangeVertical(
+        Number(this.mapElement.style.top.slice(0, -2)) - this.speed
+      ) + 'px';
+    }, validator);
+  }
+  gotoArticle(selector) {
+    const articleElement = this.articleElements[
+            typeof(selector) === 'number' ?
+            selector :
+            this.articleSelectors.indexOf(selector)
+          ];
+
+    this.mapElement.classList.add('is-goto');
+    this.mapElement.style.left = this.limitToRangeHorizontal((
+      this.containerElement.offsetWidth - articleElement.offsetWidth
+    ) * .5 - articleElement.offsetLeft) + 'px';
+    this.mapElement.style.top = this.limitToRangeVertical(
+      - articleElement.offsetTop
+    ) + 'px';
+    window.setTimeout(
+      () => this.mapElement.classList.remove('is-goto'),
+      this.transitionDuration
+    );
+  }
+  goWest(validator) {
+    this.goAction(() => {
+      this.mapElement.style.left = this.limitToRangeHorizontal(
+        Number(this.mapElement.style.left.slice(0, -2)) + this.speed
+      ) + 'px';
+    }, validator);
+  }
   keyDown(event) {
     if (!this.isKeyDown) {
       const keyUpEventListener = () => {
@@ -152,6 +208,21 @@ export class ArticlesMap {
           return this.goSouth(() => this.isKeyDown);
       }
     }
+  }
+  limitToRange(value, min) {
+    return Math.min(0, Math.max(min, value));
+  }
+  limitToRangeHorizontal(value) {
+    return this.limitToRange(
+      value,
+      this.containerElement.offsetWidth - this.mapElement.offsetWidth
+    );
+  }
+  limitToRangeVertical(value) {
+    return this.limitToRange(
+      value,
+      this.containerElement.offsetHeight - this.mapElement.offsetHeight
+    );
   }
   mouseDown() {
     this.isMouseDown = true;
@@ -227,77 +298,6 @@ export class ArticlesMap {
   mouseUp() {
     this.isArrowActive = false;
     this.isMouseDown = false;
-  }
-  goAction(action, validator) {
-    if (validator()) {
-      action();
-      this.dispatchEvent('move');
-      window.setTimeout(() => {
-        this.goAction(action, validator);
-      }, 16);
-    }
-  }
-  goEast(validator) {
-    this.goAction(() => {
-      this.mapElement.style.left = this.limitToRangeHorizontal(
-        Number(this.mapElement.style.left.slice(0, -2)) - this.speed
-      ) + 'px';
-    }, validator);
-  }
-  goNorth(validator) {
-    this.goAction(() => {
-      this.mapElement.style.top = this.limitToRangeVertical(
-        Number(this.mapElement.style.top.slice(0, -2)) + this.speed
-      ) + 'px';
-    }, validator);
-  }
-  goSouth(validator) {
-    this.goAction(() => {
-      this.mapElement.style.top = this.limitToRangeVertical(
-        Number(this.mapElement.style.top.slice(0, -2)) - this.speed
-      ) + 'px';
-    }, validator);
-  }
-  goWest(validator) {
-    this.goAction(() => {
-      this.mapElement.style.left = this.limitToRangeHorizontal(
-        Number(this.mapElement.style.left.slice(0, -2)) + this.speed
-      ) + 'px';
-    }, validator);
-  }
-  gotoArticle(selector) {
-    const articleElement = this.articleElements[
-            typeof(selector) === 'number' ?
-            selector :
-            this.articleSelectors.indexOf(selector)
-          ];
-
-    this.mapElement.classList.add('is-goto');
-    this.mapElement.style.left = this.limitToRangeHorizontal((
-      this.containerElement.offsetWidth - articleElement.offsetWidth
-    ) * .5 - articleElement.offsetLeft) + 'px';
-    this.mapElement.style.top = this.limitToRangeVertical(
-      - articleElement.offsetTop
-    ) + 'px';
-    window.setTimeout(
-      () => this.mapElement.classList.remove('is-goto'),
-      this.transitionDuration
-    );
-  }
-  limitToRange(value, min) {
-    return Math.min(0, Math.max(min, value));
-  }
-  limitToRangeHorizontal(value) {
-    return this.limitToRange(
-      value,
-      this.containerElement.offsetWidth - this.mapElement.offsetWidth
-    );
-  }
-  limitToRangeVertical(value) {
-    return this.limitToRange(
-      value,
-      this.containerElement.offsetHeight - this.mapElement.offsetHeight
-    );
   }
   removeEventListener(type, listener) {
     if (this.eventListeners[type]) {
