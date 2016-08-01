@@ -128,8 +128,10 @@ export class ArticlesMap {
   dispatchEvent(type) {
     const eventListeners = this.eventListeners[type];
 
-    for (let i = 0, ii = eventListeners.length; i < ii; i++) {
-      eventListeners[i]();
+    if (eventListeners) {
+      for (let i = 0, ii = eventListeners.length; i < ii; i++) {
+        eventListeners[i]();
+      }
     }
   }
   goAction(action, validator) {
