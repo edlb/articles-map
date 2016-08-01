@@ -17,6 +17,7 @@ export class ArticlesMap {
             '[data-module="amEast"]' :
             config.east
           );
+    const eventListeners = {};
     const mapElement = containerElement.querySelector(
             htmlMode ?
             '[data-module="amMap"]' :
@@ -50,6 +51,7 @@ export class ArticlesMap {
       Number(options.autoScrollRange)
     );
     this.containerElement = containerElement;
+    this.eventListeners = eventListeners;
     this.htmlMode = htmlMode;
     this.mapElement = mapElement;
     this.mapElement.style.left = 0;
@@ -89,6 +91,13 @@ export class ArticlesMap {
   }
 
   // Methods
+  addEventListener(type, listener) {
+    if (this.eventListeners[type]) {
+      this.eventListeners[type].push(listener);
+    } else {
+      this.eventListeners[type] = [listener];
+    }
+  }
   arrowGo(direction) {
     this.isArrowActive = true;
     switch (direction) {
@@ -115,6 +124,13 @@ export class ArticlesMap {
   }
   arrowsMouseLeave() {
     this.isArrowsHover = false;
+  }
+  dispatchEvent(type) {
+    const eventListeners = this.eventListeners[type];
+
+    for (let i = 0, ii = eventListeners.length; i < ii; i++) {
+      eventListeners[i]();
+    }
   }
   keyDown(event) {
     if (!this.isKeyDown) {
@@ -215,6 +231,7 @@ export class ArticlesMap {
   goAction(action, validator) {
     if (validator()) {
       action();
+      this.dispatchEvent('move');
       window.setTimeout(() => {
         this.goAction(action, validator);
       }, 16);
@@ -281,6 +298,13 @@ export class ArticlesMap {
       value,
       this.containerElement.offsetHeight - this.mapElement.offsetHeight
     );
+  }
+  removeEventListener(type, listener) {
+    if (this.eventListeners[type]) {
+      this.eventListeners[type] = this.eventListeners[type].filter(
+        (eventListener) => eventListener !== listener
+      );
+    }
   }
   setArticle(article) {
     const articleSelector = this.htmlMode ? '#' + article.id : (

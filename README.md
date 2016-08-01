@@ -93,3 +93,23 @@ In HTML mode, options are attributes on the container element
 | autoScrollRange    | number  | no        | 80      | data-auto-scroll-range=\<value>   |
 | speed              | number  | no        | 4       | data-speed=\<value>               |
 | transitionDuration | number  | no        | 480     | data-transition-duration=\<value> |
+
+### Events
+
+You can attach event listeners to the `ArticleMap` instance close to DOM event listeners.
+
+Example use:
+
+```
+const logEvent = () => console.log('event');
+const map = new ArticlesMap('#map-container');
+
+map.addEventListener('move', logEvent);
+// You can remove this event listener: map.removeEventListener('move', logEvent);
+```
+
+#### Available events
+
+| Event | Description             |
+|-------|-------------------------|
+| move  | Sent when the map moves |
