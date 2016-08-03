@@ -300,6 +300,7 @@ export class ArticlesMap {
   mouseUp() {
     this.isArrowActive = false;
     this.isMouseDown = false;
+    this.dispatchEvent('move');
   }
   removeEventListener(type, listener) {
     if (this.eventListeners[type]) {
