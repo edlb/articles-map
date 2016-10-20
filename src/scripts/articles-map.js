@@ -68,7 +68,7 @@ export class ArticlesMap {
     arrowsElement.addEventListener('mouseenter', () => this.arrowsMouseEnter());
     arrowsElement.addEventListener('mouseleave', () => this.arrowsMouseLeave());
     containerElement.addEventListener('mousemove', (e) => this.mouseMove(e));
-    containerElement.addEventListener('mousedown', () => this.mouseDown());
+    containerElement.addEventListener('mousedown', (e) => this.mouseDown(e));
     containerElement.addEventListener('mouseup', () => this.mouseUp());
     eastElement.addEventListener('mousedown', () => this.arrowGo('east'));
     northElement.addEventListener('mousedown', () => this.arrowGo('north'));
@@ -226,8 +226,10 @@ export class ArticlesMap {
       this.containerElement.offsetHeight - this.mapElement.offsetHeight
     );
   }
-  mouseDown() {
+  mouseDown(event) {
     this.isMouseDown = true;
+    this.mouseScreenX = event.screenX;
+    this.mouseScreenY = event.screenY;
   }
   mouseLeave() {
     this.isArrowActive = false;
@@ -245,11 +247,15 @@ export class ArticlesMap {
       this.isGoingWest = false;
       if (this.isMouseDown && !this.isArrowsHover) {
         this.mapElement.style.left = this.limitToRangeHorizontal(
-          Number(this.mapElement.style.left.slice(0, -2)) + event.movementX
+          Number(this.mapElement.style.left.slice(0, -2)) +
+          event.screenX - this.mouseScreenX
         ) + 'px';
+        this.mouseScreenX = event.screenX;
         this.mapElement.style.top = this.limitToRangeVertical(
-          Number(this.mapElement.style.top.slice(0, -2)) + event.movementY
+          Number(this.mapElement.style.top.slice(0, -2)) +
+          event.screenY - this.mouseScreenY
         ) + 'px';
+        this.mouseScreenY = event.screenY;
       }
     } else {
       const position = {
